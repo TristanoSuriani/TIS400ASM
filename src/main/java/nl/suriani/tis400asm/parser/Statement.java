@@ -11,5 +11,7 @@ public record Statement(Instruction instruction, List<Parameter> parameters) {
         if (parameters.size() > 2) {
             throw new IllegalArgumentException("Too many parameters, maximum is 2, given " + parameters().size());
         }
+        // TODO add constraint check on n. of characters.
+        // n. of characters: length of instruction + length of all parameters + (n. of parameters - 1) (representing amount of spaces)
     }
 }
