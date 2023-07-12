@@ -8,4 +8,8 @@ public record Program(List<Statement> statements) {
         Objects.requireNonNull(statements);
         // TODO add constraint check on n. of statements
     }
+
+    public Program() {
+        this(List.of());
+    }
 }

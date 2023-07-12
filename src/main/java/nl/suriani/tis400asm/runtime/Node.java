@@ -1,16 +1,23 @@
 package nl.suriani.tis400asm.runtime;
 
+import nl.suriani.tis400asm.parser.Parameter;
+import nl.suriani.tis400asm.parser.Program;
+import nl.suriani.tis400asm.parser.Statement;
+
+import java.util.Optional;
+
 public class Node {
-    private Port up;
-    private Port down;
-    private Port left;
-    private Port right;
+    final private Port up;
+    final private Port down;
+    final private Port left;
+    final private Port right;
     private Port any;
     private Port last;
-    private Register acc;
-    private Register bak;
-    private Register pc;
-    private NodeStatus status;
+    final private Register acc;
+    final private Register bak;
+    final private Register pc;
+    final private NodeStatus status;
+    final private Program program;
 
     public Node() {
         up = new Port();
@@ -20,73 +27,116 @@ public class Node {
         acc = new Register();
         bak = new Register();
         pc = new Register();
+        status = NodeStatus.READY;
+        program = new Program();
     }
 
-    public void up() {
-
+    public void loadProgram(Program program) {
+        this.program.statements().clear();
+        this.program.statements().addAll(program.statements());
     }
 
-    public void down() {
-
+    public NodeSnapshot step() {
+        return new NodeSnapshot(acc, bak, pc, status);
     }
 
-    public void left() {
+    private void handleStatement(Statement statement) {
+        final var parameters = statement.parameters();
+        final var maybeParameter1 = parameters.stream()
+                .limit(1)
+                .findFirst();
 
+        final var maybeParameter2 = parameters.stream()
+                .limit(2)
+                .skip(1)
+                .findFirst();
+
+        switch (statement.instruction().type()) {
+            case NOP -> { break; }
+            case MOV -> mov(maybeParameter1.get(), maybeParameter2.get());
+            case SWP -> { break; }
+            case SAV -> { break; }
+            case ADD -> { break; }
+            case SUB -> { break; }
+            case NEG -> { break; }
+            case JMP -> { break; }
+            case JEZ -> { break; }
+            case JNZ -> { break; }
+            case JGZ -> { break; }
+            case JLZ -> { break; }
+            case JRO -> { break; }
+        }
     }
 
-    public void right() {
-
-    }
-
-    public void any() {
-
-    }
-
-    public void last() {
-
-    }
-
-    public void add() {
-
-    }
-
-    public void sub() {
-
-    }
-
-    public void neg() {
-
-    }
-
-    public void nop() {
-
-    }
-
-    public void sav() {
-
-    }
-
-    public void swp() {
+    private void up() {
 
     }
 
-    public void jmp() {
+    private void down() {
 
     }
 
-    public void jez() {
+    private void left() {
 
     }
-    public void jlz() {
+
+    private void right() {
 
     }
-    public void jgz() {
+
+    private void any() {
 
     }
-    public void jnz() {
+
+    private void last() {
 
     }
-    public void jro() {
+
+    private void mov(Parameter from, Parameter to) {
+
+    }
+
+    private void add() {
+
+    }
+
+    private void sub() {
+
+    }
+
+    private void neg() {
+
+    }
+
+    private void nop() {
+
+    }
+
+    private void sav() {
+
+    }
+
+    private void swp() {
+
+    }
+
+    private void jmp() {
+
+    }
+
+    private void jez() {
+
+    }
+    private void jlz() {
+
+    }
+    private void jgz() {
+
+    }
+    private void jnz() {
+
+    }
+    private void jro() {
 
     }
 }

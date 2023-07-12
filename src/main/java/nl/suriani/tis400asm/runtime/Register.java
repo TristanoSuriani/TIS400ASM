@@ -7,6 +7,14 @@ public class Register {
         this.data = new Data();
     }
 
+    public Register(Data data) {
+        this.data = data;
+    }
+
+    public Register clone() {
+        return new Register(data);
+    }
+
     public Integer data() {
         return data.value();
     }
